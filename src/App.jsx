@@ -6,6 +6,7 @@ function App() {
     <>
       <SearchBar/>
       <CardsRender/>
+      {/* bug dodany specjalnie jako przypomnienie, że nawet wszechświat ma błędy */}
     </>
   )
 }
