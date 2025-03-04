@@ -7,6 +7,7 @@ function SearchBar() {
             <Search placeholder="Wyszukaj pokemona"/>
             <Button>Szukaj</Button>
         </Form>
+        
     </Wrapper>
   )
 }
