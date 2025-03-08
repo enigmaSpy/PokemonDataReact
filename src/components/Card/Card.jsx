@@ -1,49 +1,56 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { SearchContext } from "../../TypeData"
 import {
   CardContainer,
-  PokemonImage,
   InfoContainer,
-  PokemonNameC,
   PokemonIdC,
+  PokemonImage,
+  PokemonNameC,
 } from "./styed";
-const Card = ({ pokemonId, pokemonName }) => {
+
+const Card = ({ pokemonId}) => {
   const [pokemonInfo, setPokemonInfo] = useState([]);
+  const { searchType } = useContext(SearchContext); // Przekaż SearchContext do useContext
 
   useEffect(() => {
-    if (!pokemonName) return; 
   
     const fetchPokemonData = async () => {
       try {
         const response = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+          `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
         );
         if (!response.ok) {
-          throw new Error(`Pokemon ${pokemonName} nie istnieje!`);
+          throw new Error(`Pokemon ${pokemonId} nie istnieje!`);
         }
         const result = await response.json();
-        setPokemonInfo([result.sprites, result.types]);
+        setPokemonInfo({
+          pokemonName:name,
+          sprites:result.sprites, 
+          types:[...result.types]
+        });
       } catch (error) {
         console.error("Błąd:", error);
       }
     };
-  
-    fetchPokemonData();
-  }, [pokemonName]);
-  
 
-  return (
+    fetchPokemonData();
+  }, [pokemonId]);
+
+  return searchType === "all" ||
+    pokemonInfo.types?.some((t) => t.type.name === searchType) ? (
     <CardContainer>
-      <PokemonImage src={pokemonInfo[0]?.front_default || "vite.svg"} />
+      <PokemonImage src={pokemonInfo.sprites?.front_default || "vite.svg"} alt={pokemonInfo.pokemonName} />
       <InfoContainer>
         <PokemonIdC>
           {pokemonId < 10 ? `#00${pokemonId}` : `#0${pokemonId}`}
         </PokemonIdC>
-        <PokemonNameC>{pokemonName}</PokemonNameC>
-        <p>{pokemonInfo[1]?.map((t) => t.type.name).join(", ")}</p>
+        <PokemonNameC>{pokemonId.pokemonName}</PokemonNameC>
+        <p>{pokemonInfo.types?.map((t) => t.type.name).join(", ")}</p>
       </InfoContainer>
     </CardContainer>
+  ) : (
+    <></>
   );
 };
-
 
 export default Card;
