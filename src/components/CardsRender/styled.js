@@ -12,10 +12,3 @@ export const CardsContainer = styled.section`
   margin: 0 auto;
   
 `;
-
-export const LoadingMessage = styled.h2`
-  text-align: center;
-  font-size: 24px;
-  color: rebeccapurple;
-  margin-top: 32px;
-`;

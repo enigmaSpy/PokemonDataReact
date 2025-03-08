@@ -3,17 +3,18 @@ import { SearchContext } from "../../TypeData.jsx"; // Dodaj import kontekstu
 import { Button, Form, Search, Wrapper } from "./styles";
 
 function SearchBar() {
+  const [pokemonSelected, setPokemonSelected] = useState("");
   const [typeSelected, setTypeSelected] = useState("all");
-  const { setSearchType } = useContext(SearchContext); // Przekaż SearchContext do useContext
+  const { searchType,setSearchType } = useContext(SearchContext); // Przekaż SearchContext do useContext
 
   useEffect(() => {
-    setSearchType(typeSelected);
-  }, [typeSelected, setSearchType]);
+    setSearchType({pokemonName: pokemonSelected, pokemonTypes:typeSelected});
+  }, [typeSelected, setSearchType,searchType,pokemonSelected]);
 
   return (
     <Wrapper>
       <Form>
-        <Search placeholder="Wyszukaj pokemona" />
+        <Search placeholder="Wyszukaj pokemona" value={pokemonSelected} onChange={(e) => setPokemonSelected(e.target.value)} />
         <Button>Szukaj</Button>
       </Form>
       <label htmlFor="dropdown">Wybierz Typ pokemona</label>
