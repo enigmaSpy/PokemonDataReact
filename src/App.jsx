@@ -1,6 +1,6 @@
 import CardsRender from "./components/CardsRender/CardsRender";
 import SearchBar from "./components/SearchBar/SearchBar";
-import { SearchProvider } from "./TypeData.jsx";
+import { SearchProvider } from "./TypeData";
 function App() {
   return (
    <SearchProvider>
