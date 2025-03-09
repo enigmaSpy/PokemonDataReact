@@ -1,48 +1,62 @@
 import { useEffect, useState, useContext } from "react";
 import { SearchContext } from "../../TypeData.jsx"; // Dodaj import kontekstu
-import { Button, Form, Search, Wrapper } from "./styles";
+import {
+  Form,
+  Search,
+  Wrapper,
+  DropdownLabel,
+  DropdownSelect,
+  DropdownOption,
+  FilterSection
+} from "./styles";
 
 function SearchBar() {
   const [pokemonSelected, setPokemonSelected] = useState("");
   const [typeSelected, setTypeSelected] = useState("all");
-  const { searchType,setSearchType } = useContext(SearchContext); // Przekaż SearchContext do useContext
+  const { setSearchType } = useContext(SearchContext);
 
   useEffect(() => {
-    setSearchType({pokemonName: pokemonSelected, pokemonTypes:typeSelected});
-  }, [typeSelected, setSearchType,searchType,pokemonSelected]);
+    setSearchType({ pokemonName: pokemonSelected, pokemonTypes: typeSelected });
+  }, [typeSelected, pokemonSelected]);
 
   return (
     <Wrapper>
       <Form>
-        <Search placeholder="Wyszukaj pokemona" value={pokemonSelected} onChange={(e) => setPokemonSelected(e.target.value)} />
-        <Button>Szukaj</Button>
+        <Search
+          placeholder="Wyszukaj pokemona"
+          value={pokemonSelected}
+          onChange={(e) => setPokemonSelected(e.target.value)}
+        />
       </Form>
-      <label htmlFor="dropdown">Wybierz Typ pokemona</label>
-      <select
-        id="dropdown"
-        value={typeSelected}
-        onChange={(e) => setTypeSelected(e.target.value)}
-      >
-        <option value="all">Wszystkie</option>
-        <option value="bug">Robacze</option>
-        <option value="dark">Mroczne</option>
-        <option value="dragon">Smocze</option>
-        <option value="electric">Elektryczne</option>
-        <option value="fairy">Wróżkowe</option>
-        <option value="fighting">Walczące</option>
-        <option value="fire">Ogniste</option>
-        <option value="flying">Latające</option>
-        <option value="ghost">Duchowe</option>
-        <option value="grass">Trawiaste</option>
-        <option value="ground">Ziemne</option>
-        <option value="ice">Lodowe</option>
-        <option value="normal">Normalne</option>
-        <option value="poison">Trujące</option>
-        <option value="psychic">Psychiczne</option>
-        <option value="rock">Kamienne</option>
-        <option value="steel">Stalowe</option>
-        <option value="water">Wodne</option>
-      </select>
+      <FilterSection>
+      <DropdownLabel >
+        Wybierz Typ pokemona
+        <DropdownSelect
+          value={typeSelected}
+          onChange={(e) => setTypeSelected(e.target.value)}
+        >
+          <DropdownOption value="all">Wszystkie</DropdownOption>
+          <DropdownOption value="bug">Robacze</DropdownOption>
+          <DropdownOption value="dark">Mroczne</DropdownOption>
+          <DropdownOption value="dragon">Smocze</DropdownOption>
+          <DropdownOption value="electric">Elektryczne</DropdownOption>
+          <DropdownOption value="fairy">Wróżkowe</DropdownOption>
+          <DropdownOption value="fighting">Walczące</DropdownOption>
+          <DropdownOption value="fire">Ogniste</DropdownOption>
+          <DropdownOption value="flying">Latające</DropdownOption>
+          <DropdownOption value="ghost">Duchowe</DropdownOption>
+          <DropdownOption value="grass">Trawiaste</DropdownOption>
+          <DropdownOption value="ground">Ziemne</DropdownOption>
+          <DropdownOption value="ice">Lodowe</DropdownOption>
+          <DropdownOption value="normal">Normalne</DropdownOption>
+          <DropdownOption value="poison">Trujące</DropdownOption>
+          <DropdownOption value="psychic">Psychiczne</DropdownOption>
+          <DropdownOption value="rock">Kamienne</DropdownOption>
+          <DropdownOption value="steel">Stalowe</DropdownOption>
+          <DropdownOption value="water">Wodne</DropdownOption>
+        </DropdownSelect>
+      </DropdownLabel>
+      </FilterSection>
     </Wrapper>
   );
 }
