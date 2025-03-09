@@ -1,6 +1,6 @@
-import { useEffect, useState, useContext } from "react";
-import { SearchContext } from "../../TypeData"
-import defaultPokemonImg  from "../../assets/000.webp"
+import { useState } from "react";
+import defaultPokemonImg from "../../assets/000.webp";
+import shinyStar from "../../assets/shinyStar.svg";
 import {
   CardContainer,
   InfoContainer,
@@ -8,58 +8,40 @@ import {
   PokemonImage,
   PokemonNameC,
   PokemonTypesWprapper,
-  PokemonType
+  PokemonType,
+  ShinyStarImg,
 } from "./styed";
 
-const Card = ({ pokemonId}) => {
- 
-  const [pokemonInfo, setPokemonInfo] = useState(null);
-  const { searchType } = useContext(SearchContext);
-
-  useEffect(() => {
-  
-    const fetchPokemonData = async () => {
-      try {
-        const response = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
-        );
-        if (!response.ok) {
-          throw new Error(`Pokemon ${pokemonId} nie istnieje!`);
-        }
-        const result = await response.json();
-        setPokemonInfo({
-          pokemonName:result.name,
-          sprites:result.sprites, 
-          types:[...result.types]
-        });
-      } catch (error) {
-        console.error("Błąd:", error);
-      }
-    };
-
-    fetchPokemonData();
-  }, []);
-  if(!pokemonInfo) return null;
-  
-  const isTypeMatch = searchType.pokemonTypes === "all" || pokemonInfo.types?.some((t) => t.type.name === searchType.pokemonTypes);
-  const isNameMatch = searchType.pokemonName === "" || pokemonInfo.pokemonName.toLowerCase().includes(searchType.pokemonName.toLowerCase());
-  return  isTypeMatch && isNameMatch ? (
+const Card = ({ pokemonId, sprites, pokemonName, types }) => {
+  const [showShiny, setShowShiny] = useState(false);
+  return (
     <CardContainer>
-      <PokemonImage src={pokemonInfo.sprites?.front_default ||defaultPokemonImg} alt={pokemonInfo.pokemonName} />
+      <PokemonImage
+        loading="lazy"
+        src={
+          showShiny
+            ? sprites?.front_shiny || defaultPokemonImg
+            : sprites?.front_default || defaultPokemonImg
+        }
+        alt={pokemonName}
+      />
       <InfoContainer>
         <PokemonIdC>
           {pokemonId < 10 ? `#00${pokemonId}` : `#0${pokemonId}`}
         </PokemonIdC>
-        <PokemonNameC>{pokemonInfo.pokemonName}</PokemonNameC>
-        <PokemonTypesWprapper>{pokemonInfo.types?.map((t,index) =>(
-          <PokemonType key={index} styledType={t.type?.name}>
-            {t.type?.name}
-          </PokemonType>
-        ))}</PokemonTypesWprapper>
+        <PokemonNameC>
+          {pokemonName}
+          <ShinyStarImg src={shinyStar} showShiny={showShiny} onClick={() => setShowShiny((prev) => !prev)}/>
+        </PokemonNameC>
+        <PokemonTypesWprapper>
+          {types?.map((t, index) => (
+            <PokemonType key={index} styledtype={t.type?.name} >
+              {t.type?.name}
+            </PokemonType>
+          ))}
+        </PokemonTypesWprapper>
       </InfoContainer>
     </CardContainer>
-  ) : (
-    <></>
   );
 };
 

@@ -38,6 +38,13 @@ font-size: 1.6em;
     translate: 0 -1px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
+  @media (max-width: 600px) {
+    display:flex;
+    padding: 14px;
+    min-width: 100%;
+    justify-content:space-between;
+    align-items:center;
+  }
 `;
 
 export const PokemonImage = styled.img`
@@ -45,11 +52,17 @@ export const PokemonImage = styled.img`
   border-radius: 10px;
   padding: 8px;
   background: radial-gradient(circle, rgba(190, 182, 182, 0.9), rgba(236, 234, 234, 0.9));
- 
+  @media (max-width: 600px) {
+    width:161px;
+  }
 `;
 
 export const InfoContainer = styled.div`
   margin-top: 8px;
+  @media (max-width: 600px) {
+    
+    min-width: 50%;
+  }
 `;
 export const PokemonIdC = styled.span`
 display: block;
@@ -57,6 +70,9 @@ display: block;
   font-family: 'Arial', sans-serif;
   letter-spacing: 0.5px;
   text-shadow: 1px 1px 2px rgba(52, 48, 48, 1);
+  @media (max-width: 600px) {
+    font-size: 18px;      
+  }
 `;
 
 export const PokemonNameC = styled.span`
@@ -76,9 +92,13 @@ export const PokemonType =styled.p`
   border: 1px solid rgb(190, 137, 137);
   border-radius: 5px;
   padding: 2px 8px;
-  background-color: ${({styledType})=>getTypeColor(styledType).background};
-  color:${({styledType})=>getTypeColor(styledType).color};
+  background-color: ${({styledtype})=>getTypeColor(styledtype).background};
+  color:${({styledtype})=>getTypeColor(styledtype).color};
   font-size: 0.8em;
   text-transform: capitalize;
  
 `; 
+export const ShinyStarImg = styled.img`
+  filter: ${({showShiny}) => showShiny ? 'brightness(0) saturate(100%) invert(81%) sepia(63%) saturate(748%) hue-rotate(356deg) brightness(102%) contrast(105%)' 
+                                       : 'brightness(0) saturate(100%) invert(75%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%)'}; /* Szary kolor */
+`;
