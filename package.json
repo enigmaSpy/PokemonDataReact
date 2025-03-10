@@ -17,6 +17,8 @@
     "pokeapi-js-wrapper": "^1.2.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router": "^7.3.0",
+    "react-router-dom": "^7.3.0",
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
