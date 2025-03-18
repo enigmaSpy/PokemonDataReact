@@ -1,13 +1,45 @@
-# React + Vite
+# Pokedex
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projekt Pokedex to aplikacja webowa stworzona w React przy użyciu Vite, która pozwala użytkownikom przeglądać informacje o różnych Pokemonach. Aplikacja korzysta z [PokeAPI v2](https://pokeapi.co/) do pobierania danych o Pokemonach.
 
-Currently, two official plugins are available:
+## Funkcje
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Przeglądanie listy Pokemonów.
+- Wyświetlanie szczegółowych informacji o wybranym Pokemonie.
+- Wyszukiwanie Pokemonów po nazwie.
+- Responsywny design, dostosowany do różnych rozmiarów ekranów.
 
-## Expanding the ESLint configuration
+## Technologie
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-"# PokemonDataReact" 
+- [Vite](https://vitejs.dev/) - Narzędzie do szybkiego budowania aplikacji webowych.
+- [React](https://reactjs.org/) - Biblioteka do budowania interfejsów użytkownika.
+- [PokeAPI v2](https://pokeapi.co/) - API dostarczające dane o Pokemonach.
+
+
+## Instalacja
+
+Aby uruchomić projekt lokalnie, wykonaj poniższe kroki:
+
+1. Sklonuj repozytorium:
+
+   ```bash
+   git clone https://github.com/twoja_nazwa_użytkownika/pokedex.git
+   ```
+
+2. Przejdź do katalogu projektu:
+
+   ```bash
+   cd pokedex
+   ```
+
+3. Zainstaluj zależności:
+
+   ```bash
+   npm install
+   ```
+
+4. Uruchom serwer deweloperski:
+
+   ```bash
+   npm run dev
+   ```
