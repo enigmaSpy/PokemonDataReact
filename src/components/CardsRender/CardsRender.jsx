@@ -56,18 +56,18 @@ const CardsRender = () => {
       );
       return Promise.all(promises);
     };
-
+  //! func 
     const batchSize = 100;
     const batches = [];
     for (let i = 0; i < results.length; i += batchSize) {
       batches.push(results.slice(i, i + batchSize));
     }
-
+  //!
     const detailedPokemon = [];
     for (const batch of batches) {
       const batchResults = await fetchBatch(batch);
       detailedPokemon.push(...batchResults.filter((p) => p !== null));
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
     const tx = db.transaction("pokemon", "readwrite");

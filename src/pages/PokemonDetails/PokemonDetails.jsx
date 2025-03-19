@@ -1,80 +1,87 @@
-import { Container, Title, SpriteContainer, SpriteImage, Section, SectionTitle, List, ListItem, AudioPlayer } from './styled';
-
+import {
+  Container,
+  Title,
+  SpriteImage,
+  Section,
+  SectionTitle,
+  List,
+  ListItem,
+  ListItemType,
+  HeadSection,
+} from "./styled";
+import defaultPokemonImg from "../../assets/000.webp";
 import { useLocation } from "react-router-dom";
-
+import { useState } from "react";
 const PokemonDetails = () => {
   const location = useLocation();
-  const pokemonData = location.state; // Dane z <Link state={pokemon}>
+  const pokemonData = location.state; 
 
-  console.log("Pokemon Data:", pokemonData); // Debugging line
+  const [showShiny, setShowShiny] = useState(false);
 
-  
+  const playCry = () => {
+    const audio = new Audio(pokemonData.cries.latest);
+    audio.play();
+  };
+
   return (
-    <Container >
-      <Title >{pokemonData.pokemonName}</Title>
-      <SpriteContainer >
+    <Container>
+      <HeadSection>
+        <div>
+          <Title>{pokemonData.pokemonName}</Title>
+          <SectionTitle>ID: {pokemonData.id}</SectionTitle>
+          <p style={{ color: "#555" }}>
+            Shiny <input 
+              type="checkbox"
+              onClick={()=>setShowShiny((prev)=>!prev)}
+              />
+          </p>
+        </div>
         <SpriteImage
-          src={pokemonData.sprites.front_default}
+          src={
+            showShiny?
+            pokemonData.sprites.front_shiny || defaultPokemonImg :
+            pokemonData.sprites.front_default || defaultPokemonImg
+          }
           alt={`${pokemonData.pokemonName} front sprite`}
-          
+          onClick={playCry}
         />
-        <SpriteImage
-          src={pokemonData.sprites.front_shiny}
-          alt={`${pokemonData.pokemonName} shiny sprite`}
-         
-        />
-      </SpriteContainer>
+
+        <div>
+          <SectionTitle>Types: </SectionTitle>
+          <List>
+            {pokemonData.types.map((type, index) => (
+              <ListItemType key={index}>{type.type.name}</ListItemType>
+            ))}
+          </List>
+        </div>
+      </HeadSection>
 
       <Section>
-        <SectionTitle>ID: {pokemonData.id}</SectionTitle>
-      </Section>
-
-      <Section>
-        <SectionTitle>Types</SectionTitle>
-        <List >
-          {pokemonData.types.map((type, index) => (
-            <ListItem
-              key={index}
-            >
-              {type.type.name}
-            </ListItem>
-          ))}
-        </List>
-      </Section>
-
-      <SectionTitle>
+      <div>
         <SectionTitle>Abilities</SectionTitle>
-        <List >
+        <List>
           {pokemonData.abilities.map((ability, index) => (
             <ListItem key={index}>
               {ability.ability.name}{" "}
-              {ability.is_hidden && <span>(Hidden)</span>}
+              {ability.is_hidden && "(Hidden)"}
             </ListItem>
           ))}
         </List>
-      </SectionTitle>
+        </div>
 
-      <SectionTitle>
+        <div>
         <SectionTitle>Stats</SectionTitle>
-        <List >
+        <List>
           {pokemonData.stats.map((stat, index) => (
             <ListItem key={index}>
               {stat.stat.name}: {stat.base_stat} (Effort: {stat.effort})
             </ListItem>
           ))}
         </List>
-      </SectionTitle>
-
-      <section>
-        <h2>Cry</h2>
-        <AudioPlayer controls>
-          <source src={pokemonData.cries.latest} type="audio/ogg" />
-          Your browser does not support the audio element.
-        </AudioPlayer>
-      </section>
+        </div>
+      </Section>
     </Container>
   );
 };
-
 
 export default PokemonDetails;

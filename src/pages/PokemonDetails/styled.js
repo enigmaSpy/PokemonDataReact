@@ -6,68 +6,95 @@ export const Container = styled.div`
   background-color: #f0f0f0;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 90vw;
-  margin: 0 auto;
-  font-family: "Arial", sans-serif;
+  min-width: 100svw;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 // Stylizowany nagłówek
 export const Title = styled.h1`
-  color: #333;
-  text-align: center;
+  color: rgba(0, 0, 0, 0.88);
   text-transform: capitalize;
-`;
+  font-size: 1.5em;
 
-// Stylizowany kontener dla obrazków
-export const SpriteContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 20px 0;
+  @media (max-width: 768px) {
+    font-size: 1.2em;
+  }
 `;
 
 // Stylizowany obrazek
 export const SpriteImage = styled.img`
-  width: 100px;
-  height: 100px;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  transition: transform 0.2s;
+  height: 300px;
 
-  &:hover {
-    transform: scale(1.1);
+  @media (max-width: 768px) {
+    height: 200px;
   }
 `;
 
 // Stylizowana sekcja
 export const Section = styled.section`
-  margin: 20px 0;
+  display: flex;
+  flex-direction: row;
+  gap: 15%;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+`;
+
+// Stylizowana sekcja nagłówka
+export const HeadSection = styled(Section)`
+  gap: 5%;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
 `;
 
 // Stylizowany nagłówek sekcji
 export const SectionTitle = styled.h2`
   color: #555;
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 5px;
+  font-size: 1.2em;
+
+  @media (max-width: 768px) {
+    font-size: 1em;
+  }
 `;
 
 // Stylizowana lista
 export const List = styled.ul`
-  list-style-type: none;
+  list-style: none;
+  color: #555;
   padding: 0;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+`;
+
+export const ListItemType = styled.li`
+  display: block;
+  border: 1px solid #555;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 3px;
+    margin: 3px;
+  }
 `;
 
 // Stylizowany element listy
 export const ListItem = styled.li`
-  background-color: #fff;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-// Stylizowany audio
-export const AudioPlayer = styled.audio`
-  width: 100%;
-  margin-top: 10px;
+  text-decoration: none;
 `;
