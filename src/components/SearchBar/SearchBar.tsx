@@ -1,5 +1,5 @@
-import { useEffect, useState, useContext } from "react";
-import { SearchContext } from "../../TypeData.jsx"; // Dodaj import kontekstu
+import React, { useEffect, useState, useContext } from "react";
+import { SearchContext } from "../../TypeData.js"; // Dodaj import kontekstu
 import {
   Form,
   Search,
@@ -8,12 +8,12 @@ import {
   DropdownSelect,
   DropdownOption,
   FilterSection
-} from "./styles";
+} from "./styles.js";
 
 function SearchBar() {
   const [pokemonSelected, setPokemonSelected] = useState("");
   const [typeSelected, setTypeSelected] = useState("all");
-  const { setSearchType } = useContext(SearchContext);
+  const { setSearchType } = useContext(SearchContext) as { setSearchType: any };
 
   useEffect(() => {
     setSearchType({ pokemonName: pokemonSelected, pokemonTypes: typeSelected });
@@ -25,7 +25,7 @@ function SearchBar() {
         <Search
           placeholder="Wyszukaj pokemona"
           value={pokemonSelected}
-          onChange={(e) => setPokemonSelected(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPokemonSelected(e.target.value)}
         />
       </Form>
       <FilterSection>
@@ -33,7 +33,7 @@ function SearchBar() {
         Wybierz Typ pokemona
         <DropdownSelect
           value={typeSelected}
-          onChange={(e) => setTypeSelected(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTypeSelected(e.target.value)}
         >
           <DropdownOption value="all">Wszystkie</DropdownOption>
           <DropdownOption value="bug">Robacze</DropdownOption>

@@ -1,8 +1,9 @@
+import React from "react";
 import {
   CardsContainer,
   LoadingMessage,
   FilteredResults,
-} from "../CardsRender/styled";
+} from "./styled";
 import { useEffect, useState, useContext, useMemo, useCallback } from "react";
 import { SearchContext } from "../../TypeData";
 import Card from "../Card/Card";
@@ -15,12 +16,25 @@ const dbPromise = openDB("PokedexDB", 1, {
   },
 });
 
-const CardsRender = () => {
-  const [pokemonInfo, setPokemonInfo] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { searchType } = useContext(SearchContext);
+type Pokemon = {
+  id:number;
+  sprites: {
+    front_default: string;
+  };
+  pokemonName: string;
+  types: {
+    type: {
+      name: string;
+    };
+  }[];
+};
 
-  const fetchPokemonData = async (abortController) => {
+const CardsRender = () => {
+  const [pokemonInfo, setPokemonInfo] = useState<Pokemon[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { searchType } = useContext(SearchContext) as { searchType: { pokemonTypes: string, pokemonName: string } };
+
+  const fetchPokemonData = async (abortController:AbortController) => {
     const db = await dbPromise;
 
     const storedPokemon = await db.getAll("pokemon");
@@ -36,8 +50,8 @@ const CardsRender = () => {
     );
     const { results } = await response.json();
 
-    const fetchBatch = async (pokemonBatch) => {
-      const promises = pokemonBatch.map((p) =>
+    const fetchBatch = async (pokemonBatch: { url: string, name: string }[]) => {
+      const promises = pokemonBatch.map((p: { url: string, name: string }) =>
         fetch(p.url, { signal: abortController.signal })
           .then((res) => res.json())
           .then((data) => ({
@@ -82,7 +96,7 @@ const CardsRender = () => {
     const abortController = new AbortController();
 
     fetchPokemonData(abortController).catch((error) => {
-      console.error("Błąd w pobieraniu danych:", error);
+      console.error("Error fetching data:", error);
       setIsLoading(false);
     });
 
@@ -100,17 +114,17 @@ const CardsRender = () => {
   };
 
   const isTypeMatch = useCallback(
-    (value) => {
+    (value: Pokemon) => {
       return (
         searchType.pokemonTypes === "all" ||
-        value.types?.some((t) => t.type.name === searchType.pokemonTypes)
+        value.types?.some((t: { type: { name: string } }) => t.type.name === searchType.pokemonTypes)
       );
     },
     [searchType.pokemonTypes]
   );
 
   const isNameMatch = useCallback(
-    (value) => {
+    (value:Pokemon) => {
       return (
         searchType.pokemonName === "" ||
         value.pokemonName
@@ -129,7 +143,7 @@ const CardsRender = () => {
 
   return !isLoading ? (
     <>
-      <FilteredResults>Wyników: {filteredPokemon.length}</FilteredResults>
+      <FilteredResults>Results: {filteredPokemon.length}</FilteredResults>
       <button onClick={resetDatabase}>Reset Database</button>
       <CardsContainer>
         {filteredPokemon.length > 0 ? (
@@ -143,12 +157,12 @@ const CardsRender = () => {
             </Link>
           ))
         ) : (
-          <LoadingMessage>Brak danych do wyświetlenia</LoadingMessage>
+          <LoadingMessage>No data to display</LoadingMessage>
         )}
       </CardsContainer>
     </>
   ) : (
-    <LoadingMessage>Pobieranie danych :D</LoadingMessage>
+    <LoadingMessage>Loading data :D</LoadingMessage>
   );
 };
 

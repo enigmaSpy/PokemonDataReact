@@ -1,3 +1,4 @@
+import React from "react";
 import defaultPokemonImg from "../../assets/000.webp";
 
 import {
@@ -9,8 +10,24 @@ import {
   PokemonTypesWprapper,
   PokemonType,
 } from "./styed";
+type Pokemon = {
+  id:number;
+  sprites: {
+    front_default: string;
+  };
+  pokemonName: string;
+  types: {
+    type: {
+      name: string;
+    };
+  }[];
+}
+type CardProps ={
+  pokemon: Pokemon;
+}
 
-const Card = ({pokemon}) => {
+
+const Card:React.FC<CardProps>= ({pokemon}) => {
   const { id: pokemonId, sprites, pokemonName, types } = pokemon;
   return (
     <CardContainer>

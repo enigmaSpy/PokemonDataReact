@@ -11,10 +11,41 @@ import {
 } from "./styled";
 import defaultPokemonImg from "../../assets/000.webp";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
+
+type Pokemon = {
+  id:number;
+  sprites: {
+    front_default: string;
+    front_shiny: string;
+  };
+  pokemonName: string;
+  types: {
+    type: {
+      name: string;
+    };
+  }[];
+  abilities: {
+    ability: {
+      name: string;
+    };
+    is_hidden: boolean;
+  }[];
+  cries: {
+    latest: string;
+  };
+  stats: {
+    stat: {
+      name: string;
+    };
+    base_stat: number;
+    effort: number;
+  }[];
+};
+
 const PokemonDetails = () => {
   const location = useLocation();
-  const pokemonData = location.state; 
+  const pokemonData:Pokemon = location.state; 
 
   const [showShiny, setShowShiny] = useState(false);
 
